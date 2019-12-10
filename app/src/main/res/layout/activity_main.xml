@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Turn off media"
-        android:onClick="turnOffMedia"
+        android:onClick="muteMedia"
         tools:layout_editor_absoluteX="167dp"
         tools:layout_editor_absoluteY="41dp" />
 
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Turn off alarm"
-        android:onClick="turnOffAlarm"
+        android:onClick="muteAlarm"
         tools:layout_editor_absoluteX="161dp"
         tools:layout_editor_absoluteY="111dp" />
 
