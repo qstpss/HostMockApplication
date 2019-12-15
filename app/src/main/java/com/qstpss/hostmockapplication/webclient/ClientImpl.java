@@ -5,13 +5,12 @@ import com.qstpss.hostmockapplication.model.MockEvent;
 import java.io.IOException;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ClientImpl implements IClient {
-    private static final String hostAddress = "185.204.2.124:8080";
+    private static final String hostAddress = "http://185.204.2.124:8080/";
     private Retrofit retrofit;
     private Response<MockEvent> response;
 
@@ -26,6 +25,7 @@ public class ClientImpl implements IClient {
     public Call<MockEvent> createMockEvent(MockEvent mockEvent) throws IOException {
         IClient client = retrofit.create(IClient.class);
         Call<MockEvent> call = client.createMockEvent(mockEvent);
+        // HTTP call knowingly do in UI thread
         this.response = call.execute();
         return call;
     }

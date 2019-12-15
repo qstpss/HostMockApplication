@@ -1,10 +1,11 @@
 package com.qstpss.hostmockapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
-import android.widget.Button;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.qstpss.hostmockapplication.model.MockEvent;
 import com.qstpss.hostmockapplication.model.Type;
@@ -21,24 +22,53 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                .permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
-    public void doVibration(View view) {
-        MockEvent mockEvent = new MockEvent(Type.VIBRATION);
+    public void processEvent(View view) {
+        Type eventType = getEventType(view);
+        MockEvent mockEvent = new MockEvent(eventType);
         IClient client = new ClientImpl();
         try {
-            //TODO: do some animation
             client.createMockEvent(mockEvent);
-            //TODO: finish animation
             Response<MockEvent> response = client.getResponse();
+            if (response.isSuccessful()) {
+                showToast(mockEvent.getType().name());
+            } else {
+                showFailToast();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void muteMedia(View view) {
+    private Type getEventType(View view) {
+        Type eventType = null;
+        switch (view.getId()) {
+            case R.id.unmuteMedia:
+                eventType = Type.MUTE_MEDIA;
+                break;
+            case R.id.unmuteAlarm:
+                eventType = Type.MUTE_ALARM;
+                break;
+            case R.id.doVibration:
+                eventType = Type.VIBRATION;
+                break;
+        }
+        return eventType;
     }
 
-    public void muteAlarm(View view) {
+    private void showToast(String eventType) {
+        Toast.makeText(this,
+                eventType + " event has been successfully created", Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    private void showFailToast() {
+        Toast.makeText(this,
+                "Something went wrong", Toast.LENGTH_SHORT)
+                .show();
     }
 }

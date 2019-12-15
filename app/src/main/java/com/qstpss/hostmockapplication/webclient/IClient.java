@@ -11,7 +11,7 @@ import retrofit2.http.POST;
 
 public interface IClient {
 
-    String serverControllerEndpoint = "/rest";
+    String serverControllerEndpoint = "mockServer/rest";
 
     @POST(serverControllerEndpoint + "/new")
     Call<MockEvent> createMockEvent(@Body MockEvent mockEvent) throws IOException;
