@@ -13,7 +13,10 @@ import com.qstpss.hostmockapplication.webclient.ClientImpl;
 import com.qstpss.hostmockapplication.webclient.IClient;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import retrofit2.Call;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,20 +30,16 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
     }
 
-    public void processEvent(View view) {
+    public void processEvent(View view) throws IOException {
         Type eventType = getEventType(view);
         MockEvent mockEvent = new MockEvent(eventType);
         IClient client = new ClientImpl();
-        try {
-            client.createMockEvent(mockEvent);
-            Response<MockEvent> response = client.getResponse();
-            if (response.isSuccessful()) {
-                showToast(mockEvent.getType().name());
-            } else {
-                showFailToast();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        client.createMockEvent(mockEvent);
+        Response response = client.getResponse();
+        if (response.isSuccessful()) {
+            showToast(mockEvent.getType().name() + " event has been successfully created");
+        } else {
+            showFailToast();
         }
     }
 
@@ -60,15 +59,47 @@ public class MainActivity extends AppCompatActivity {
         return eventType;
     }
 
-    private void showToast(String eventType) {
-        Toast.makeText(this,
-                eventType + " event has been successfully created", Toast.LENGTH_SHORT)
-                .show();
+    private void showToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
     private void showFailToast() {
         Toast.makeText(this,
                 "Something went wrong", Toast.LENGTH_SHORT)
                 .show();
+    }
+
+    public void finishAllEvents(View view) throws IOException {
+        IClient client = new ClientImpl();
+
+        client.finishAllEvents();
+        Response response = client.getResponse();
+        if (response.isSuccessful()) {
+            showToast("All events have been finished");
+        } else {
+            showFailToast();
+        }
+
+    }
+
+    public void getStartedEvents(View view) throws IOException {
+        IClient client = new ClientImpl();
+
+        Call<List<MockEvent>> startedEvents = client.getStartedEvents();
+        Response response = client.getResponse();
+        if (response.isSuccessful()) {
+            List<MockEvent> body = (List<MockEvent>) response.body();
+            if (body.isEmpty()) {
+                showToast("There are no active events");
+            } else {
+                String activeEventsType = body.stream()
+                        .map(mockEvent -> mockEvent.getType().name())
+                        .collect(Collectors.joining("\n"));
+
+                showToast(activeEventsType);
+            }
+        } else {
+            showFailToast();
+        }
     }
 }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <Button
@@ -26,4 +27,18 @@
         android:layout_height="wrap_content"
         android:onClick="processEvent"
         android:text="Turn on vibration" />
+
+    <Button
+        android:id="@+id/finishAll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Finish all"
+        android:onClick="finishAllEvents"/>
+
+    <Button
+        android:id="@+id/startedEvents"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get started events"
+        android:onClick="getStartedEvents"/>
 </LinearLayout>
