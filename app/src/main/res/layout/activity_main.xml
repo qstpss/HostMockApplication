@@ -1,35 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/unmuteMedia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Turn off media"
-        android:onClick="turnOffMedia"
-        tools:layout_editor_absoluteX="167dp"
-        tools:layout_editor_absoluteY="41dp" />
+        android:onClick="processEvent"
+        android:text="Turn off media" />
 
     <Button
         android:id="@+id/unmuteAlarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Turn off alarm"
-        android:onClick="turnOffAlarm"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="111dp" />
+        android:onClick="processEvent"
+        android:text="Turn off alarm" />
 
     <Button
         android:id="@+id/doVibration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Turn on vibration"
-        android:onClick="doVibration"
-        tools:layout_editor_absoluteX="152dp"
-        tools:layout_editor_absoluteY="186dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:onClick="processEvent"
+        android:text="Turn on vibration" />
+
+    <Button
+        android:id="@+id/finishAll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Finish all"
+        android:onClick="finishAllEvents"/>
+
+    <Button
+        android:id="@+id/startedEvents"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get started events"
+        android:onClick="getStartedEvents"/>
+</LinearLayout>

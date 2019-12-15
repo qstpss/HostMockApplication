@@ -2,6 +2,7 @@ package com.qstpss.hostmockapplication.model;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -12,27 +13,36 @@ public class MockEvent {
     private MockEvent(){
     }
 
-    public MockEvent(@NonNull Type type) {
+    public MockEvent(Type type) {
+        if (type == null) {
+            throw new UnsupportedOperationException();
+        }
         this.type = type;
         this.status = Status.PENDING;
     }
 
     @SerializedName("id")
+    @Expose
     private Long id;
 
     @SerializedName("type")
+    @Expose
     private Type type;
 
     @SerializedName("status")
+    @Expose
     private Status status;
 
     @SerializedName("registerTimestamp")
+    @Expose
     private Date registerTimestamp;
 
     @SerializedName("startTimestamp")
+    @Expose
     private Date startTimestamp;
 
     @SerializedName("endTimestamp")
+    @Expose
     private Date endTimestamp;
 
     public Long getId() {
