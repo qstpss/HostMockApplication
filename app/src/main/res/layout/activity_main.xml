@@ -21,12 +21,11 @@
         android:onClick="processEvent"
         android:text="Turn on vibration" />
 
-    <TextView
+    <EditText
         android:id="@+id/popupMessageTxt"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:hint="Enter your message"
-        android:text="TextView" />
+        android:hint="Enter your message"/>
 
     <Button
         android:id="@+id/popupMessageBtn"

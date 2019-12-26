@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 showToast("There are no active events");
             } else {
                 String activeEventsType = body.stream()
-                        .map(mockEvent -> mockEvent.getType().name() + " : " + mockEvent.getType())
+                        .map(mockEvent -> mockEvent.getType().name() + " : " + mockEvent.getStatus())
                         .collect(Collectors.joining("\n"));
                 showToast(activeEventsType);
             }
