@@ -3,6 +3,7 @@ package com.qstpss.hostmockapplication;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,11 +21,13 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
+    private TextView msgView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        msgView = findViewById(R.id.popupMessageTxt);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void processEvent(View view) throws IOException {
         Type eventType = getEventType(view);
-        MockEvent mockEvent = new MockEvent(eventType);
+        MockEvent mockEvent = getMockEvent(eventType);
         IClient client = new ClientImpl();
         client.createMockEvent(mockEvent);
         Response response = client.getResponse();
@@ -43,16 +46,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private MockEvent getMockEvent(Type eventType) {
+        MockEvent mockEvent = new MockEvent(eventType);
+        if (eventType == Type.POPUP_MESSAGE) {
+            mockEvent.setMessage(msgView.getText().toString());
+        }
+        return mockEvent;
+    }
+
     private Type getEventType(View view) {
         Type eventType = null;
         switch (view.getId()) {
-            case R.id.unmuteMedia:
+            case R.id.unmuteMediaBtn:
                 eventType = Type.MUTE_MEDIA;
                 break;
-            case R.id.unmuteAlarm:
-                eventType = Type.MUTE_ALARM;
+            case R.id.popupMessageBtn:
+                eventType = Type.POPUP_MESSAGE;
                 break;
-            case R.id.doVibration:
+            case R.id.doVibrationBtn:
                 eventType = Type.VIBRATION;
                 break;
         }
@@ -93,9 +104,8 @@ public class MainActivity extends AppCompatActivity {
                 showToast("There are no active events");
             } else {
                 String activeEventsType = body.stream()
-                        .map(mockEvent -> mockEvent.getType().name())
+                        .map(mockEvent -> mockEvent.getType().name() + " : " + mockEvent.getType())
                         .collect(Collectors.joining("\n"));
-
                 showToast(activeEventsType);
             }
         } else {

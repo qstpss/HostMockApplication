@@ -8,32 +8,39 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/unmuteMedia"
+        android:id="@+id/unmuteMediaBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="processEvent"
         android:text="Turn off media" />
 
     <Button
-        android:id="@+id/unmuteAlarm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="processEvent"
-        android:text="Turn off alarm" />
-
-    <Button
-        android:id="@+id/doVibration"
+        android:id="@+id/doVibrationBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="processEvent"
         android:text="Turn on vibration" />
 
+    <TextView
+        android:id="@+id/popupMessageTxt"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:hint="Enter your message"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/popupMessageBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send Message"
+        android:onClick="processEvent"/>
+
     <Button
         android:id="@+id/finishAll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Finish all"
-        android:onClick="finishAllEvents"/>
+        android:onClick="finishAllEvents"
+        android:text="Finish all" />
 
     <Button
         android:id="@+id/startedEvents"
@@ -41,4 +48,5 @@
         android:layout_height="wrap_content"
         android:text="Get started events"
         android:onClick="getStartedEvents"/>
+
 </LinearLayout>
